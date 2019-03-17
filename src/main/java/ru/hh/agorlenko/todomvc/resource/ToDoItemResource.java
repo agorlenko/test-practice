@@ -21,6 +21,7 @@ import ru.hh.agorlenko.todomvc.service.ToDoItemService;
 public class ToDoItemResource {
 
   private static final ToDoItemService toDoItemService = new ToDoItemService();
+  private static final ToDoItemMapper mapper = new ToDoItemMapper();
 
   @GET
   @Path("/status")
@@ -35,28 +36,28 @@ public class ToDoItemResource {
     if (item == null) {
       return Response.status(Response.Status.NOT_FOUND).build();
     }
-    return Response.ok(new ToDoItemDTO(item)).build();
+    return Response.ok(mapper.toDto(item)).build();
   }
 
   @GET
   @Path("/all")
-  public List<ToDoItemDTO> getAllItems() {
+  public List<ToDoItemDto> getAllItems() {
     return toDoItemService.getAllItems().stream()
-            .map(ToDoItemDTO::new)
+            .map(mapper::toDto)
             .collect(Collectors.toList());
   }
 
   @POST
   @Path("/create")
-  public Response createItem(ToDoItemDTO item) {
-    toDoItemService.createItem(new ToDoItem(item));
+  public Response createItem(ToDoItemDto item) {
+    toDoItemService.createItem(mapper.toEntity(item));
     return Response.status(Response.Status.OK).build();
   }
 
   @PUT
   @Path("/{id}")
-  public Response updateItem(@PathParam("id") long id, ToDoItemDTO item) {
-    final int updateCount = toDoItemService.updateItem(id, new ToDoItem(item));
+  public Response updateItem(@PathParam("id") long id, ToDoItemDto item) {
+    final int updateCount = toDoItemService.updateItem(id, mapper.toEntity(item));
     if (updateCount == 1) {
       return Response.status(Response.Status.OK).build();
     } else {

@@ -27,13 +27,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import ru.hh.agorlenko.todomvc.ApplicationTestConfig;
 import ru.hh.agorlenko.todomvc.ApplicationTestJerseyConfig;
-import ru.hh.agorlenko.todomvc.dao.DAOFactory;
+import ru.hh.agorlenko.todomvc.dao.DaoFactory;
 import ru.hh.nab.starter.NabApplication;
 import ru.hh.nab.starter.server.jetty.JettyServer;
 
 public class TestToDoItemResource {
 
-  private static final DAOFactory daoFactory = DAOFactory.getDAOFactory(DAOFactory.Collections);
+  private static final DaoFactory daoFactory = DaoFactory.getDaoFactory(DaoFactory.Collections);
 
   private static JettyServer server;
 
@@ -80,8 +80,8 @@ public class TestToDoItemResource {
     int statusCode = response.getStatusLine().getStatusCode();
     assertEquals(200, statusCode);
     String jsonString = EntityUtils.toString(response.getEntity());
-    List<ToDoItemDTO> items = mapper.readValue(jsonString,
-        mapper.getTypeFactory().constructCollectionType(List.class, ToDoItemDTO.class));
+    List<ToDoItemDto> items = mapper.readValue(jsonString,
+        mapper.getTypeFactory().constructCollectionType(List.class, ToDoItemDto.class));
     assertTrue(items.size() > 0);
   }
 
@@ -94,7 +94,7 @@ public class TestToDoItemResource {
     int statusCode = response.getStatusLine().getStatusCode();
     assertEquals(200, statusCode);
     String jsonString = EntityUtils.toString(response.getEntity());
-    ToDoItemDTO item = mapper.readValue(jsonString, ToDoItemDTO.class);
+    ToDoItemDto item = mapper.readValue(jsonString, ToDoItemDto.class);
     assertEquals(itemId, item.getId());
   }
 
@@ -115,7 +115,7 @@ public class TestToDoItemResource {
 
     // create new item
     URI uri = builder.setPath("/item/create").build();
-    ToDoItemDTO item = new ToDoItemDTO(itemId, "test" + itemId, false);
+    ToDoItemDto item = new ToDoItemDto(itemId, "test" + itemId, false);
     String jsonInString = mapper.writeValueAsString(item);
     StringEntity entity = new StringEntity(jsonInString);
     HttpPost request = new HttpPost(uri);
@@ -132,7 +132,7 @@ public class TestToDoItemResource {
     statusCode = responseGet.getStatusLine().getStatusCode();
     assertEquals(200, statusCode);
     String jsonString = EntityUtils.toString(responseGet.getEntity());
-    ToDoItemDTO receivedItem = mapper.readValue(jsonString, ToDoItemDTO.class);
+    ToDoItemDto receivedItem = mapper.readValue(jsonString, ToDoItemDto.class);
     assertEquals(item, receivedItem);
 
   }
@@ -144,7 +144,7 @@ public class TestToDoItemResource {
 
     // update item
     URI uri = builder.setPath("/item/" + itemId).build();
-    ToDoItemDTO item = new ToDoItemDTO(itemId, "changed", false);
+    ToDoItemDto item = new ToDoItemDto(itemId, "changed", false);
     String jsonInString = mapper.writeValueAsString(item);
     StringEntity entity = new StringEntity(jsonInString);
     HttpPut request = new HttpPut(uri);
@@ -161,7 +161,7 @@ public class TestToDoItemResource {
     statusCode = responseGet.getStatusLine().getStatusCode();
     assertEquals(200, statusCode);
     String jsonString = EntityUtils.toString(responseGet.getEntity());
-    ToDoItemDTO receivedItem = mapper.readValue(jsonString, ToDoItemDTO.class);
+    ToDoItemDto receivedItem = mapper.readValue(jsonString, ToDoItemDto.class);
     assertEquals(item, receivedItem);
 
   }
@@ -173,7 +173,7 @@ public class TestToDoItemResource {
 
     // update item
     URI uri = builder.setPath("/item/" + itemId).build();
-    ToDoItemDTO item = new ToDoItemDTO(itemId, "changed", false);
+    ToDoItemDto item = new ToDoItemDto(itemId, "changed", false);
     String jsonInString = mapper.writeValueAsString(item);
     StringEntity entity = new StringEntity(jsonInString);
     HttpPut request = new HttpPut(uri);
@@ -235,14 +235,14 @@ public class TestToDoItemResource {
     statusCode = responseGetAll.getStatusLine().getStatusCode();
     assertEquals(200, statusCode);
     String jsonString = EntityUtils.toString(responseGetAll.getEntity());
-    List<ToDoItemDTO> items = mapper.readValue(jsonString,
-            mapper.getTypeFactory().constructCollectionType(List.class, ToDoItemDTO.class));
+    List<ToDoItemDto> items = mapper.readValue(jsonString,
+            mapper.getTypeFactory().constructCollectionType(List.class, ToDoItemDto.class));
     assertEquals(0, items.size());
   }
 
   @After
   public void dropTestData() {
-    daoFactory.getToDoItemDAO().dropItems();
+    daoFactory.getToDoItemDao().dropItems();
   }
 
   @AfterClass

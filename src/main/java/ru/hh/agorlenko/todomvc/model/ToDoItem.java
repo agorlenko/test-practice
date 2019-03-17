@@ -1,7 +1,5 @@
 package ru.hh.agorlenko.todomvc.model;
 
-import ru.hh.agorlenko.todomvc.resource.ToDoItemDTO;
-
 public class ToDoItem {
 
   private long id;
@@ -10,18 +8,9 @@ public class ToDoItem {
 
   private boolean completed;
 
-  public ToDoItem() {
-  }
-
   public ToDoItem(long id, String title) {
     this.id = id;
     this.title = title;
-  }
-
-  public ToDoItem(ToDoItemDTO itemDTO) {
-    this.id = itemDTO.getId();
-    this.title = itemDTO.getTitle();
-    this.completed = itemDTO.getCompleted();
   }
 
   public long getId() {

@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import ru.hh.agorlenko.todomvc.dao.ToDoItemDAO;
+import ru.hh.agorlenko.todomvc.dao.ToDoItemDao;
 import ru.hh.agorlenko.todomvc.model.ToDoItem;
 
-public class ToDoItemDAOImpl implements ToDoItemDAO {
+public class ToDoItemDaoImpl implements ToDoItemDao {
 
   private static final ConcurrentMap<Long, ToDoItem> itemIdMap = new ConcurrentHashMap<>();
 

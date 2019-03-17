@@ -1,9 +1,8 @@
 package ru.hh.agorlenko.todomvc.resource;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.hh.agorlenko.todomvc.model.ToDoItem;
 
-public class ToDoItemDTO {
+public class ToDoItemDto {
 
   @JsonProperty(required = true)
   private long id;
@@ -14,19 +13,13 @@ public class ToDoItemDTO {
   @JsonProperty(required = true)
   private boolean completed;
 
-  public ToDoItemDTO() {
+  public ToDoItemDto() {
   }
 
-  public ToDoItemDTO(long id, String title, boolean completed) {
+  public ToDoItemDto(long id, String title, boolean completed) {
     this.id = id;
     this.title = title;
     this.completed = completed;
-  }
-
-  public ToDoItemDTO(ToDoItem item) {
-    this.id = item.getId();
-    this.title = item.getTitle();
-    this.completed = item.getCompleted();
   }
 
   public long getId() {
@@ -62,7 +55,7 @@ public class ToDoItemDTO {
       return false;
     }
 
-    ToDoItemDTO item = (ToDoItemDTO) o;
+    ToDoItemDto item = (ToDoItemDto) o;
 
     return id == item.id;
   }

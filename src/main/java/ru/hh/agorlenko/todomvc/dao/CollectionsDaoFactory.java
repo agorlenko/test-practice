@@ -1,16 +1,16 @@
 package ru.hh.agorlenko.todomvc.dao;
 
-import ru.hh.agorlenko.todomvc.dao.impl.ToDoItemDAOImpl;
+import ru.hh.agorlenko.todomvc.dao.impl.ToDoItemDaoImpl;
 import ru.hh.agorlenko.todomvc.model.ToDoItem;
 
 /**
  * Collections DAO
  */
-public class CollectionsDAOFactory extends DAOFactory {
+public class CollectionsDaoFactory extends DaoFactory {
 
-  private static final ToDoItemDAOImpl toDoItemDAO = new ToDoItemDAOImpl();
+  private static final ToDoItemDaoImpl toDoItemDAO = new ToDoItemDaoImpl();
 
-  public ToDoItemDAO getToDoItemDAO() {
+  public ToDoItemDao getToDoItemDao() {
     return toDoItemDAO;
   }
 

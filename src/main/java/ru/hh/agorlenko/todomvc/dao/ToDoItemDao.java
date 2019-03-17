@@ -4,7 +4,7 @@ import java.util.List;
 
 import ru.hh.agorlenko.todomvc.model.ToDoItem;
 
-public interface ToDoItemDAO {
+public interface ToDoItemDao {
 
   ToDoItem getItemById(long id);
 
