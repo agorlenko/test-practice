@@ -30,6 +30,20 @@
         </repository>
     </repositories>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>hh-public</id>
+            <name>hh public releases repository</name>
+            <url>http://m2.hh.ru/content/repositories/public-releases</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
     <properties>
         <nab.version>4.15.4</nab.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -54,13 +68,6 @@
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.2</version>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -130,34 +137,17 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.0.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.github.sevntu-checkstyle</groupId>
-                        <artifactId>sevntu-checkstyle-maven-plugin</artifactId>
-                        <version>1.32.0</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>8.12</version>
-                    </dependency>
-                </dependencies>
+                <groupId>ru.hh.checkstyle</groupId>
+                <artifactId>hh-maven-checkstyle-plugin</artifactId>
                 <executions>
                     <execution>
                         <id>validate</id>
                         <phase>validate</phase>
                         <configuration>
-                            <sourceDirectories>
-                                <sourceDirectory>${basedir}/src</sourceDirectory>
-                            </sourceDirectories>
-                            <configLocation>google_checks.xml</configLocation>
-                            <encoding>UTF-8</encoding>
-                            <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                            <violationSeverity>error</violationSeverity>
-                            <consoleOutput>true</consoleOutput>
+                            <failOnViolation>true</failOnViolation>
+                            <hhCheckStyleConfig>
+                                <cfg>shared-checkstyle.xml</cfg>
+                            </hhCheckStyleConfig>
                         </configuration>
                         <goals>
                             <goal>check</goal>

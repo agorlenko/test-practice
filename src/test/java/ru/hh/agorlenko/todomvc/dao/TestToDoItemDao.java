@@ -1,10 +1,5 @@
 package ru.hh.agorlenko.todomvc.dao;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.List;
 
 import org.junit.After;
@@ -13,6 +8,8 @@ import org.junit.Test;
 
 import ru.hh.agorlenko.todomvc.model.ToDoItem;
 
+import static org.junit.Assert.*;
+
 public class TestToDoItemDao {
 
   private static final DaoFactory daoFactory = DaoFactory.getDaoFactory(DaoFactory.Collections);
@@ -20,7 +17,17 @@ public class TestToDoItemDao {
   @Before
   public void populateTestData() {
     // prepare test data
-    daoFactory.populateTestData();
+    ToDoItem item1 = new ToDoItem(1, "test1");
+    ToDoItem item2 = new ToDoItem(2, "test2");
+    ToDoItem item3 = new ToDoItem(3, "test3");
+    daoFactory.getToDoItemDao().insertItem(item1);
+    daoFactory.getToDoItemDao().insertItem(item2);
+    daoFactory.getToDoItemDao().insertItem(item3);
+  }
+
+  @After
+  public void dropTestData() {
+    daoFactory.getToDoItemDao().dropItems();
   }
 
   @Test
@@ -31,7 +38,7 @@ public class TestToDoItemDao {
   @Test
   public void testGetAllItems() {
     List<ToDoItem> allItems = daoFactory.getToDoItemDao().getAllItems();
-    assertTrue(allItems.size() > 0);
+    assertFalse(allItems.isEmpty());
   }
 
   @Test
@@ -87,11 +94,6 @@ public class TestToDoItemDao {
   public void testDeleteNonexistentItem() {
     long itemId = 123;
     assertEquals(0, daoFactory.getToDoItemDao().deleteItem(itemId));
-  }
-
-  @After
-  public void dropTestData() {
-    daoFactory.getToDoItemDao().dropItems();
   }
 
 }
